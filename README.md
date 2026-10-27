@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vectora
 
-## Getting Started
+Research documentation for machine learning and language models. The site
+publishes project context, model records, version-specific documentation, and
+interactive architecture diagrams without inventing research facts.
 
-First, run the development server:
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). Run `npm run lint`,
+`npx tsc --noEmit`, and `npm run build` to validate changes.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Site structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/` is the project-wide overview.
+- `/models` is the model directory.
+- `/models/<model-slug>` is a model overview.
+- `/models/<model-slug>/<version>` is an independently maintained version record.
+- `/contact` links to the supplied project contact, `github.com/wali321`.
 
-## Learn More
+The global overview, model family page, and version pages are separate. The
+model directory lists documented versions and links to each version page.
+Vectora v1 is the only version currently published; do not copy its details or
+diagrams into future version pages.
 
-To learn more about Next.js, take a look at the following resources:
+## Add model documentation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Add a typed entry to the `models` list in `lib/models.ts`. Set `latestVersion`
+   only when the project identifies one.
+2. Add `content/models/<model-slug>/index.mdx` for the model-family overview.
+3. Add a `versions` entry only for each supplied version, and create its
+   independent content at `content/models/<model-slug>/<version>.mdx`.
+4. Add architecture or pipeline data to that version's `diagrams` array. Use
+   the real component names, tensor dimensions, data types, and section links;
+   omit unknown details so the interface marks them as not documented. Mermaid
+   fenced blocks are rendered as version-scoped diagrams within MDX.
+5. Add citations and evaluation values only when the source material is
+   available. Older version content stays in place when a newer version is
+   published.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Keep version-specific assets under `public/models/<model-slug>/<version>/` and
+reference them from the corresponding version page using root-relative URLs
+(for example, `/models/vectora/v1/figure.png`). This keeps asset URLs stable
+when the page is deployed at a nested route.
 
-## Deploy on Vercel
+MDX content is processed through Fumadocs MDX. Tables, GFM, syntax highlighting,
+math, and callouts are supported. The project overview content lives in
+`content/project/index.mdx`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Configuration
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Set `SITE_URL` to the canonical deployment origin before publishing. Without
+it, the sitemap omits absolute URLs and canonical metadata is not generated.
+The contact link and author attribution are configured in `lib/project.ts`.
+
+No database, backend, or contact form is configured.
