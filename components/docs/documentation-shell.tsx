@@ -19,6 +19,14 @@ type DocumentationShellProps = {
   toc: TocEntry[];
 };
 
+function renderTocEntries(toc: TocEntry[]) {
+  return toc.map((item) => (
+    <li className={`toc-depth-${item.depth}`} key={item.url}>
+      <a href={item.url}>{item.title}</a>
+    </li>
+  ));
+}
+
 export function DocumentationShell({
   breadcrumbs,
   children,
@@ -46,19 +54,16 @@ export function DocumentationShell({
         </aside>
         <article className="prose docs-article">{children}</article>
         {toc.length > 0 && (
-          <nav aria-label="On this page" className="docs-toc">
-            <h2>On this page</h2>
-            <ol>
-              {toc.map((item) => (
-                <li
-                  className={`toc-depth-${item.depth}`}
-                  key={item.url}
-                >
-                  <a href={item.url}>{item.title}</a>
-                </li>
-              ))}
-            </ol>
-          </nav>
+          <>
+            <nav aria-label="On this page" className="docs-toc">
+              <h2>On this page</h2>
+              <ol>{renderTocEntries(toc)}</ol>
+            </nav>
+            <details className="docs-toc-compact">
+              <summary>On this page</summary>
+              <ol>{renderTocEntries(toc)}</ol>
+            </details>
+          </>
         )}
       </div>
     </main>

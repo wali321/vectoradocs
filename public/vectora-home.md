@@ -1,0 +1,48 @@
+# Vectora
+
+Vectora is an independent language-model project built to make the mechanics of language modeling concrete. It explores how a model turns text into token IDs, processes those tokens through neural-network components, and produces next-token predictions. The project develops these ideas through direct implementation in Python and PyTorch rather than treating a hosted model API as a black box.
+
+## Project overview
+
+Vectora is organized around model versions. Each version is a specific implementation with its own architecture, configuration, and development status; details from one version should not be assumed to describe another. The project-level aim is to learn by building and examining the components that make language models work.
+
+The materials currently available describe a small GPT-style decoder-only Transformer as the first documented model. They present it as a learning implementation inspired by GPT-2, not a reproduction of GPT-2 or a claim of comparable training or capability.
+
+## Research and engineering direction
+
+The current work focuses on the mechanics of autoregressive language models: tokenization, embeddings, causal attention, Transformer blocks, and next-token generation. The supplied Vectora v1 notebook implements these components and demonstrates a forward pass and greedy generation.
+
+Training workflows, evaluation, and further model development are natural areas to explore as the project grows. They should be treated as future work unless a later version's code and records verify them.
+
+## Current project status
+
+The available files support a narrow status description: Vectora v1 has a notebook implementation that constructs the model, runs a forward pass, and generates tokens using randomly initialized weights. The supplied materials do not establish that the model has been trained, evaluated on a benchmark, or prepared for deployment. They also do not document later model versions.
+
+This distinction matters: an implemented model architecture can be used to study data flow and computation, but random initialization alone does not demonstrate learned language behavior.
+
+## Explore the models
+
+Vectora v1 is the currently documented model version in the materials available for this homepage. Its individual page describes the implementation and its verified status. As the project develops, this section can link to additional versions once they exist and have their own documentation.
+
+- [Browse the models](/models)
+- [Read the Vectora v1 documentation](/models/vectora/v1)
+
+## Technical documentation
+
+The Vectora v1 documentation covers the model's architecture, data flow, configuration, tensor shapes, parameter accounting, and the limits of what the supplied implementation demonstrates. It keeps version-specific details separate from this project overview.
+
+[Open the Vectora v1 technical documentation](/models/vectora/v1)
+
+## Source code
+
+The source repository is the place to inspect the project files and follow implementation changes. The repository URL is provided in the project materials; its current contents were not independently accessible during preparation of this page.
+
+[View the Vectora source repository](https://github.com/wali321/MY-LLM-s)
+
+## Future direction
+
+The project's next steps remain open. Possible directions include implementing and documenting training, recording evaluation results, and developing additional model versions. Any specific capability or result should be added here only when supported by the corresponding implementation and evidence.
+
+## Continue exploring
+
+Start with the [model index](/models) for version-level documentation, or inspect the [source repository](https://github.com/wali321/MY-LLM-s) to follow the implementation. Vectora's purpose is to understand language models by building and examining their parts, one version at a time.

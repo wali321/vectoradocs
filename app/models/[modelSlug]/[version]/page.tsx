@@ -25,12 +25,7 @@ export async function generateMetadata({
       modelVersion.summary ??
       `Version-specific documentation for ${model.name}.`,
     alternates: process.env.SITE_URL
-      ? {
-          canonical:
-            modelVersion.id === model.latestVersion
-              ? `/models/${model.slug}`
-              : `/models/${model.slug}/${modelVersion.id}`,
-        }
+      ? { canonical: `/models/${model.slug}/${modelVersion.id}` }
       : undefined,
   };
 }

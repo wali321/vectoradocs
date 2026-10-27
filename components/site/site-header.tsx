@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { project } from "@/lib/project";
+import { PrimaryNavigation } from "./primary-navigation";
 import { ThemeToggle } from "./theme-toggle";
 
 export function SiteHeader() {
@@ -10,10 +11,7 @@ export function SiteHeader() {
           {project.name}
         </Link>
         <div className="header-tools">
-          <nav aria-label="Primary navigation" className="primary-nav">
-            <Link href="/models">Models</Link>
-            <Link href="/contact">Contact Us</Link>
-          </nav>
+          <PrimaryNavigation />
           <ThemeToggle />
         </div>
       </div>

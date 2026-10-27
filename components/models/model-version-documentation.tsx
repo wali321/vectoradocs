@@ -27,6 +27,7 @@ export function ModelVersionDocumentation({
     <DocumentationShell
       breadcrumbs={[
         { label: "Models", href: "/models" },
+        { label: model.name, href: `/models/${model.slug}` },
         { label: modelVersion.title ?? modelVersion.id },
       ]}
       sidebar={
@@ -45,11 +46,7 @@ export function ModelVersionDocumentation({
           <li key={item.id}>
             <Link
               aria-current={item.id === modelVersion.id ? "page" : undefined}
-              href={
-                item.id === model.latestVersion
-                  ? `/models/${model.slug}`
-                  : `/models/${model.slug}/${item.id}`
-              }
+              href={`/models/${model.slug}/${item.id}`}
             >
               {item.title ?? item.id}
               {model.latestVersion === item.id ? " · Latest" : ""}

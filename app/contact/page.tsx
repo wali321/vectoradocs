@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ContactForm } from "@/components/contact/contact-form";
 import { project } from "@/lib/project";
 
 export const metadata: Metadata = {
-  title: "Contact Us",
-  description:
-    "Contact the creator of Vectora through the supplied GitHub profile.",
+  title: "Contact Vectora",
+  description: "Send a question or feedback about the Vectora project.",
   alternates: process.env.SITE_URL ? { canonical: "/contact" } : undefined,
 };
 
@@ -13,23 +13,32 @@ export default function ContactPage() {
   return (
     <main id="main-content" className="page-width contact-page">
       <header className="contact-heading">
-        <h1>Contact Us</h1>
+        <h1>Contact Vectora</h1>
         <p>
-          Vectora is made by {project.author}. The supplied public contact
-          destination is this GitHub profile.
+          Share a question, technical suggestion, bug report, research idea, or
+          collaboration inquiry.
         </p>
       </header>
-      <section aria-label="Project contact" className="contact-card">
-        <h2>{project.author}</h2>
-        <p>Project creator</p>
-        <Link
-          href={project.contactUrl}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          github.com/wali321
-        </Link>
-      </section>
+      <div className="contact-layout">
+        <aside aria-label="Contact information" className="contact-context">
+          <h2>Explore the project</h2>
+          <p>
+            Message delivery is not configured. The form validates your input,
+            but does not send or store messages.
+          </p>
+          <Link
+            href={project.repositoryUrl}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            View the Vectora repository
+          </Link>
+        </aside>
+        <section aria-labelledby="contact-form-title" className="contact-panel">
+          <h2 id="contact-form-title">Send a message</h2>
+          <ContactForm />
+        </section>
+      </div>
     </main>
   );
 }

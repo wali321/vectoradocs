@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { ModelVersionDocumentation } from "@/components/models/model-version-documentation";
+import { DocumentationShell } from "@/components/docs/documentation-shell";
+import { getMDXComponents } from "@/components/docs/mdx-components";
+import { ModelSidebar } from "@/components/docs/model-sidebar";
 import { findModel } from "@/lib/models";
+import { source } from "@/lib/source";
 
 type PageProps = {
   params: Promise<{ modelSlug: string }>;
@@ -13,19 +16,14 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { modelSlug } = await params;
   const model = findModel(modelSlug);
-  const modelVersion = model?.versions.find(
-    (item) => item.id === model.latestVersion,
-  );
 
-  if (!model || !modelVersion) {
-    return { title: "Version not found" };
+  if (!model) {
+    return { title: "Model not found" };
   }
 
   return {
-    title: modelVersion.title ?? `${model.name} ${modelVersion.id}`,
-    description:
-      modelVersion.summary ??
-      `Version-specific documentation for ${model.name}.`,
+    title: `${model.name} model family`,
+    description: model.summary,
     alternates: process.env.SITE_URL
       ? { canonical: `/models/${model.slug}` }
       : undefined,
@@ -45,12 +43,24 @@ async function ModelPageContent({ params }: PageProps) {
   const model = findModel(modelSlug);
   if (!model) notFound();
 
-  const modelVersion = model.versions.find(
-    (item) => item.id === model.latestVersion,
-  );
-  if (!modelVersion) notFound();
+  const page = source.getPage(["models", model.slug]);
+  if (!page) {
+    throw new Error(
+      `Missing model documentation for "${model.slug}": content/models/${model.slug}/index.mdx`,
+    );
+  }
+  const Content = page.data.body;
 
   return (
-    <ModelVersionDocumentation model={model} modelVersion={modelVersion} />
+    <DocumentationShell
+      breadcrumbs={[
+        { label: "Models", href: "/models" },
+        { label: model.name },
+      ]}
+      sidebar={<ModelSidebar model={model} />}
+      toc={page.data.toc}
+    >
+      <Content components={getMDXComponents()} />
+    </DocumentationShell>
   );
 }

@@ -14,8 +14,7 @@ export default function ModelsPage() {
       <header className="page-heading">
         <h1>Models</h1>
         <p>
-          A directory of documented Vectora versions and their technical
-          records.
+          Browse the published Vectora versions and their technical records.
         </p>
       </header>
       <ModelList models={models} />

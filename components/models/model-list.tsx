@@ -22,13 +22,7 @@ export function ModelList({ models }: { models: ModelRecord[] }) {
     <ul className="model-list">
       {versions.map(({ model, version }) => (
         <li key={`${model.slug}-${version.id}`}>
-          <Link
-            href={
-              version.id === model.latestVersion
-                ? `/models/${model.slug}`
-                : `/models/${model.slug}/${version.id}`
-            }
-          >
+          <Link href={`/models/${model.slug}/${version.id}`}>
             <span className="model-list-title">
               {version.title ?? `${model.name} ${version.id}`}
             </span>

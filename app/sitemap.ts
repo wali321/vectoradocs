@@ -11,13 +11,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = new URL(configuredSiteUrl);
   const staticPaths = ["/", "/models", "/contact"];
   const modelPaths = models.flatMap((model) =>
-    model.versions.length === 0
-      ? [`/models/${model.slug}`]
-      : model.versions.map((version) =>
-          version.id === model.latestVersion
-            ? `/models/${model.slug}`
-            : `/models/${model.slug}/${version.id}`,
-        ),
+    [
+      `/models/${model.slug}`,
+      ...model.versions.map(
+        (version) => `/models/${model.slug}/${version.id}`,
+      ),
+    ],
   );
 
   return [...staticPaths, ...modelPaths].map((path) => ({

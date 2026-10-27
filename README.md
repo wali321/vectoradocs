@@ -20,7 +20,7 @@ Open [http://localhost:3000](http://localhost:3000). Run `npm run lint`,
 - `/models` is the model directory.
 - `/models/<model-slug>` is a model overview.
 - `/models/<model-slug>/<version>` is an independently maintained version record.
-- `/contact` links to the supplied project contact, `github.com/wali321`.
+- `/contact` provides a validated message form and a link to the project repository.
 
 The global overview, model family page, and version pages are separate. The
 model directory lists documented versions and links to each version page.
@@ -48,13 +48,15 @@ reference them from the corresponding version page using root-relative URLs
 when the page is deployed at a nested route.
 
 MDX content is processed through Fumadocs MDX. Tables, GFM, syntax highlighting,
-math, and callouts are supported. The project overview content lives in
-`content/project/index.mdx`.
+math, and callouts are supported. The project overview is sourced from
+`public/vectora-home.md` and rendered from `content/project/index.mdx`.
 
 ## Configuration
 
 Set `SITE_URL` to the canonical deployment origin before publishing. Without
 it, the sitemap omits absolute URLs and canonical metadata is not generated.
-The contact link and author attribution are configured in `lib/project.ts`.
+The project repository link and author attribution are configured in
+`lib/project.ts`. Contact form submissions are validated server-side but are
+not delivered or stored until a delivery service is configured.
 
-No database, backend, or contact form is configured.
+No database or contact delivery service is configured.

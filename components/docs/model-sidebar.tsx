@@ -34,11 +34,7 @@ export function ModelSidebar({ model, currentVersion }: ModelSidebarProps) {
                   aria-current={
                     currentVersion === version.id ? "page" : undefined
                   }
-                  href={
-                    version.id === model.latestVersion
-                      ? `/models/${model.slug}`
-                      : `/models/${model.slug}/${version.id}`
-                  }
+                  href={`/models/${model.slug}/${version.id}`}
                 >
                   {version.title ?? version.id}
                   {model.latestVersion === version.id && (
