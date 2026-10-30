@@ -21,10 +21,14 @@ export default function Home() {
   }
 
   const model = findModel("vectora");
-  const version = model?.versions.find((item) => item.id === "v1");
+  const version =
+    model?.versions.find((item) => item.id === (model.latestVersion ?? "v1.1")) ??
+    model?.versions.find((item) => item.id === "v1.1") ??
+    model?.versions[0];
+
   if (!model || !version) {
     throw new Error(
-      "Vectora v1 must be registered to feature it on the homepage.",
+      "A documented Vectora version must be registered to feature it on the homepage.",
     );
   }
 
@@ -54,14 +58,22 @@ export default function Home() {
           aria-labelledby="featured-version-title"
           className="home-feature"
         >
-          <p className="home-feature-label">First documented release</p>
+          <p className="home-feature-label">Latest documented release</p>
           <h2 id="featured-version-title">
             {version.title ?? `${model.name} ${version.id}`}
           </h2>
           <p>{version.summary ?? model.summary}</p>
-          <Link href={`/models/${model.slug}/${version.id}`}>
-            Read the v1 documentation
-          </Link>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+            <Link href={`/models/${model.slug}/${version.id}`}>
+              Read the {version.id} documentation →
+            </Link>
+            <Link
+              href={`/models/${model.slug}/v1`}
+              style={{ fontSize: "0.875rem", opacity: 0.8 }}
+            >
+              View Vectora v1 (Architecture baseline)
+            </Link>
+          </div>
         </aside>
       </section>
 
