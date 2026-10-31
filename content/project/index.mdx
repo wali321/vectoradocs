@@ -17,9 +17,10 @@ status; details from one version should not be assumed to describe another.
 The project-level aim is to learn by building and examining the components
 that make language models work.
 
-The project encompasses two independently documented releases:
+The project encompasses three independently documented releases:
 - **Vectora v1**: A foundational decoder-only Transformer architecture using GPT-2 subword tokenization with randomly initialized weights to study tensor shapes and autoregressive data flow.
-- **Vectora v1.1**: An experimental character-level GPT-style Transformer trained from scratch on Shakespeare text, featuring a complete training pipeline, recorded loss curves, and top-k character generation.
+- **Vectora v1.1**: An experimental character-level GPT-style Transformer trained from scratch on a 500k-character Shakespeare subset, featuring a complete training pipeline, recorded loss curves, and top-k character generation.
+- **Vectora v1.2**: A 23M dataset experiment scaling character-level GPT training across the full 82.2M-character corpus (~23.4M estimated GPT-2 tokens) over 50,000 steps with an expanded 333-character vocabulary and lower validation loss.
 
 ## Research and engineering direction
 
@@ -29,20 +30,23 @@ and text generation.
 
 - **Architecture exploration (v1)**: Demonstrated 4-block, 256-width decoder-only Transformer layers with GPT-2 BPE tokenization and greedy autoregressive decoding.
 - **Training and character modeling (v1.1)**: Implemented an end-to-end training pipeline on 450,000 Shakespeare training characters with AdamW optimization, cosine learning-rate decay, gradient clipping, periodic validation, and temperature-controlled top-k sampling.
+- **Dataset scaling and representation stability (v1.2)**: Scaled pretraining to 73.99 million training characters (82.22M total) across 50,000 steps, evaluating loss convergence and character representation stability on an expanded 333-character vocabulary without subwords.
 
 ## Current project status
 
 The available files support a transparent status description:
 
 1. **Vectora v1** has a notebook implementation that constructs the model, runs a forward pass, and demonstrates greedy token generation using randomly initialized weights. It serves as an architectural baseline.
-2. **Vectora v1.1** is a trained model checkpoint (`fcc.pt`) and notebook implementation with 10,000 recorded optimization steps, reducing cross-entropy loss from 4.42 down to 1.37 (train) and 1.48 (val). It produces recognizably Shakespearean character sequences, demonstrating learned spelling and stylistic patterns while remaining an educational experimental model.
+2. **Vectora v1.1** is a trained model checkpoint (`fcc.pt`) and notebook implementation with 10,000 recorded optimization steps, reducing cross-entropy loss from 4.42 down to 1.37 (train) and 1.48 (val).
+3. **Vectora v1.2** is a completed 50,000-iteration pretraining experiment on the full 82.2M-character dataset (~23.4M estimated GPT-2 tokens), reducing cross-entropy loss to 1.3793 (train) and 1.4082 (val) across an expanded 333-character vocabulary, demonstrating coherent syntax and prose generation.
 
 ## Explore the models
 
-Both model versions are published with independent technical documentation, architecture specifications, and evidence scope:
+All model versions are published with independent technical documentation, architecture specifications, and evidence scope:
 
 - [Browse all models](/models)
-- [Read the Vectora v1.1 documentation (Latest release)](/models/vectora/v1.1)
+- [Read the Vectora v1.2 documentation (Latest release)](/models/vectora/v1.2)
+- [Read the Vectora v1.1 documentation](/models/vectora/v1.1)
 - [Read the Vectora v1 documentation (Architecture baseline)](/models/vectora/v1)
 
 ## Technical documentation
@@ -51,23 +55,22 @@ Each version's technical documentation covers the model's architecture, data flo
 configuration, tensor shapes, parameter accounting, and the limits of what
 the supplied implementation demonstrates:
 
+- [Open the Vectora v1.2 technical documentation](/models/vectora/v1.2)
 - [Open the Vectora v1.1 technical documentation](/models/vectora/v1.1)
 - [Open the Vectora v1 technical documentation](/models/vectora/v1)
 
 ## Source code
 
 The source repository is the place to inspect the project files and follow
-implementation changes. The repository URL is provided in the project
-materials:
+implementation changes:
 
 [View the Vectora source repository](https://github.com/wali321/MY-LLM-s)
 
 ## Future direction
 
-Possible directions for future releases include scaling context length,
-exploring learned subword tokenizers on custom corpora, increasing dataset
-scale beyond 500,000 characters, evaluating on standard benchmarks, and
-exploring fine-tuning techniques.
+Possible directions for future releases include subword tokenization (Byte-Pair Encoding),
+larger context windows beyond 128 tokens, parameter scaling, curated multidomain datasets,
+standardized perplexity benchmarks, and instruction fine-tuning.
 
 ## Continue exploring
 

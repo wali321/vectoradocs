@@ -22,8 +22,8 @@ export default function Home() {
 
   const model = findModel("vectora");
   const version =
-    model?.versions.find((item) => item.id === (model.latestVersion ?? "v1.1")) ??
-    model?.versions.find((item) => item.id === "v1.1") ??
+    model?.versions.find((item) => item.id === (model.latestVersion ?? "v1.2")) ??
+    model?.versions.find((item) => item.id === "v1.2") ??
     model?.versions[0];
 
   if (!model || !version) {
@@ -66,6 +66,12 @@ export default function Home() {
           <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
             <Link href={`/models/${model.slug}/${version.id}`}>
               Read the {version.id} documentation →
+            </Link>
+            <Link
+              href={`/models/${model.slug}/v1.1`}
+              style={{ fontSize: "0.875rem", opacity: 0.8 }}
+            >
+              View Vectora v1.1 (Trained Character Model)
             </Link>
             <Link
               href={`/models/${model.slug}/v1`}
